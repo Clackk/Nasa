@@ -23,10 +23,20 @@ class Nasa(commands.Cog):
         url = "https://api.nasa.gov/planetary/apod?api_key=DKMfp5STY5db4AacbeDlxcFAXjvwatSZvocdVpgT"
         response = requests.get(url)
         data = response.json()
-        embed = discord.Embed(title=data["title"], url=data["hdurl"], color=0x00ff00)
-        embed.set_image(url=data["url"])
-        embed.set_footer(text=f"{data['explanation']}")
-        await ctx.send(embed=embed)
+        media = data.get["media_type"]
+        if media == "video":
+            embed = discord.Embed(title=data["title"], url=data["url"])
+            embed.set_footer(text=f"{data['explanation']}")
+            await ctx.send(embed=embed)
+            
+        else:
+            embed = discord.Embed(title=data["title"], url=data["hdurl"], color=0x00ff00)
+            embed.set_image(url=data["url"])
+            embed.set_footer(text=f"{data['explanation']}")
+            await ctx.send(embed=embed)
+        
+        
+    async def 
 
     @commands.group()
     async def epic(self, ctx):
