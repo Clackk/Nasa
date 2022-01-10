@@ -1,0 +1,38 @@
+{
+    "name": "Nasa",
+    "short": "A collection of NASA API commands",
+    "description": "A cog that allows users to access NASA's API data for cool stuff :)",
+    "end_user_data_statement": "This cog does not persistently store any data or metadata about users. sue me.",
+    "install_msg": "Thank you for installing! spaaaaacccceeeeeeeee",
+    "author": [
+        "clack#4405"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "api",
+        "Nasa",
+        "Space"
+    ],
+    "min_bot_version": "3.3.10",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}
+
+
+
+
+
+
+## randomize date requested in url in YYYY-MM-DD format
+        date = random.randint(1, 31)
+        month = random.randint(1, 12)
+        year = random.randint(2000, 2020)
+        url = f"https://epic.gsfc.nasa.gov/api/natural/date/{year}-{month}-{date}?api_key=DKMfp5STY5db4AacbeDlxcFAXjvwatSZvocdVpgT"
+        response = requests.get(url)
+        data = response.json()
+        embed = discord.Embed(title=data["title"], url=data["url"], color=0x00ff00)
+        embed.set_image(url=data["image"])
+        embed.set_footer(text=f"{data['caption']}")
+        await ctx.send(embed=embed)
