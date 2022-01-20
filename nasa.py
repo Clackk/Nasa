@@ -23,7 +23,7 @@ class Nasa(commands.Cog):
         url = "https://api.nasa.gov/planetary/apod?api_key=DKMfp5STY5db4AacbeDlxcFAXjvwatSZvocdVpgT"
         response = requests.get(url)
         data = response.json()
-        media = data.get["media_type"]
+        media = data["media_type"]
         if media == "video":
             embed = discord.Embed(title=data["title"], url=data["url"])
             embed.set_footer(text=f"{data['explanation']}")
@@ -36,7 +36,6 @@ class Nasa(commands.Cog):
             await ctx.send(embed=embed)
         
         
-    async def 
 
     @commands.group()
     async def epic(self, ctx):
@@ -55,24 +54,24 @@ class Nasa(commands.Cog):
         if date < "2015-06-13":
             await ctx.send("Please enter a date after 2015-06-13")
             return
-        ## make sure date is not in the future
-        if date > datetime.today().strftime("%Y-%M-%D"):
-            await ctx.send("Please enter a date before today")
-            return
         url = "https://api.nasa.gov/EPIC/api/natural/date/" + date + "?api_key=DKMfp5STY5db4AacbeDlxcFAXjvwatSZvocdVpgT"
         response = requests.get(url)
         data = response.json()
-        ##get random image from list using integers
-        chung = data[0]
-        random_image = chung.get("image")
-        ## get image url
-        ## reformat date string to match NASA API for date format
-        date = date.replace("-", "/")
-        url = "https://api.nasa.gov/EPIC/archive/natural/" + date + "/png/" + random_image + ".png" + "?api_key=DKMfp5STY5db4AacbeDlxcFAXjvwatSZvocdVpgT"
-        embed = discord.Embed(title="Imagery of Earth from NASA's Deep Space Climate Observatory satellite", url=url, color=0x00ff00)
-        embed.set_image(url=url)
-        embed.set_footer(text="Image courtesy of NASA")
-        await ctx.send(embed=embed)
+        ## if data is empty, return error message
+        if data == []:
+            await ctx.send("No imagery data for that date")
+        else:
+            ##get random image from list using integers
+            chung = data[0]
+            random_image = chung.get("image")
+            ## get image url
+            ## reformat date string to match NASA API for date format
+            date = date.replace("-", "/")  
+            url = "https://api.nasa.gov/EPIC/archive/natural/" + date + "/png/" + random_image + ".png" + "?api_key=DKMfp5STY5db4AacbeDlxcFAXjvwatSZvocdVpgT"
+            embed = discord.Embed(title="Imagery of Earth from NASA's Deep Space Climate Observatory satellite", url=url, color=0x00ff00)
+            embed.set_image(url=url)
+            embed.set_footer(text="Image courtesy of NASA")
+            await ctx.send(embed=embed)
 
         
     @commands.group()
